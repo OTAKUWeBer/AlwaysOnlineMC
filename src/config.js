@@ -4,7 +4,7 @@
  * ============================================================================
  */
 
-require('dotenv').config();
+require('dotenv').config({ override: true });
 
 function parseBool(val, fallback) {
   if (val === undefined || val === null || val === '') return fallback;

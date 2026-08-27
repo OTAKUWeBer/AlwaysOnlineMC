@@ -5,6 +5,7 @@
  * ============================================================================
  */
 
+require('dotenv').config({ override: true });
 const mineflayer = require('mineflayer');
 const config = require('./src/config');
 const logger = require('./src/logger');

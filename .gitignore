@@ -1,0 +1,48 @@
+# ==========================================
+# AlwaysOnlineMC - Git Ignore Configuration
+# ==========================================
+
+# Environment variables & secrets (CRITICAL)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Process PIDs and runtime locks
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Operating System temporary files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# IDE & Editor caches
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~

@@ -1,0 +1,41 @@
+{
+  "name": "alwaysonlinemc",
+  "version": "2.5.0",
+  "description": "High-resilience 24/7 Minecraft Anti-AFK Guardian with Aternos Dynamic Failover and Minecraft 1.21.4 support",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node --watch bot.js",
+    "test": "node --check bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OTAKUWeBer/AlwaysOnlineMC.git"
+  },
+  "keywords": [
+    "minecraft",
+    "mineflayer",
+    "anti-afk",
+    "aternos",
+    "24-7",
+    "bot",
+    "minecraft-1.21.4",
+    "alwaysonline"
+  ],
+  "author": "Weber (YumeZone)",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "minecraft-data": "^3.113.2",
+    "minecraft-protocol": "^1.67.0",
+    "mineflayer": "^4.37.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/OTAKUWeBer/AlwaysOnlineMC/issues"
+  },
+  "homepage": "https://github.com/OTAKUWeBer/AlwaysOnlineMC#readme"
+}

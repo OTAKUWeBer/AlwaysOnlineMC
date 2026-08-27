@@ -24,6 +24,7 @@ const config = {
     primaryPort: parseIntSafe(process.env.SERVER_PORT, 25565, 1, 65535),
     fallbackHost: process.env.FALLBACK_HOST || '',
     fallbackPort: parseIntSafe(process.env.FALLBACK_PORT, 25565, 1, 65535),
+    enableDynamicFailover: parseBool(process.env.ENABLE_DYNAMIC_FAILOVER, false),
   },
 
   // Bot Profile
@@ -59,8 +60,8 @@ const config = {
 
   // Network & Resilience
   network: {
-    reconnectBaseDelay: parseIntSafe(process.env.RECONNECT_DELAY, 12000, 3000, 60000),
-    maxReconnectDelay: parseIntSafe(process.env.MAX_RECONNECT_DELAY, 60000, 10000, 300000),
+    reconnectBaseDelay: parseIntSafe(process.env.RECONNECT_DELAY, 10000, 3000, 60000),
+    maxReconnectDelay: parseIntSafe(process.env.MAX_RECONNECT_DELAY, 45000, 10000, 300000),
     checkTimeoutInterval: parseIntSafe(process.env.TIMEOUT_INTERVAL, 60000, 10000, 120000),
     timezone: process.env.TIMEZONE || 'Asia/Dhaka',
   }

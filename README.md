@@ -89,6 +89,9 @@ Edit `.env` with your server credentials:
 # Server Connection
 SERVER_HOST=your-server.aternos.me
 SERVER_PORT=25565
+
+# Dynamic Fallback (Optional)
+ENABLE_DYNAMIC_FAILOVER=false
 FALLBACK_HOST=your-dyn-ip.aternos.host
 FALLBACK_PORT=25565
 
@@ -193,6 +196,7 @@ Oracle Cloud provides free ARM/AMD compute instances with dedicated public IPs:
 | :--- | :--- | :--- |
 | `SERVER_HOST` | `your-server.aternos.me` | Primary hostname or domain |
 | `SERVER_PORT` | `25565` | Primary server port |
+| `ENABLE_DYNAMIC_FAILOVER` | `false` | Enable fallback route cycling (`true`/`false`) |
 | `FALLBACK_HOST` | `your-dyn-ip.aternos.host` | Dynamic IP endpoint for Aternos failover |
 | `FALLBACK_PORT` | `25565` | Fallback server port |
 | `BOT_USERNAME` | `YumeVanguard` | In-game player name |

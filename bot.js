@@ -258,18 +258,20 @@ async function startBot() {
 // Global Process Management
 // ---------------------------------------------------------
 process.on('uncaughtException', (err) => {
-  const code = err.code || '';
-  const msg = err.message || '';
+  const code = err?.code || '';
+  const msg = err?.message || String(err || '');
   const isConnError =
     code === 'ECONNRESET' ||
     code === 'ECONNREFUSED' ||
     code === 'ETIMEDOUT' ||
     code === 'EPIPE' ||
     msg.includes('ECONNRESET') ||
-    msg.includes('socketClosed');
+    msg.includes('socketClosed') ||
+    msg.includes('write') ||
+    msg.includes('read');
 
   if (isConnError) {
-    logger.warn(`Server network reset during reboot (${code || msg}). Retrying...`);
+    logger.warn(`Server network reset during reboot (${code || 'ECONNRESET'}). Retrying...`);
   } else {
     logger.error(`Exception notice: ${msg}`);
   }

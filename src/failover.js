@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Failover & Endpoint Manager - AlwaysBotMC
+ * Failover & Endpoint Manager - AlwaysOnlineMC
  * Intelligent DNS pre-flight checking, route health scoring & failover
  * ============================================================================
  */
@@ -19,7 +19,7 @@ class FailoverManager {
         label: 'Primary Route',
         consecutiveFails: 0,
       },
-      ...(config.server.fallbackHost && config.server.fallbackHost !== config.server.primaryHost
+      ...(config.server.enableDynamicFailover && config.server.fallbackHost && config.server.fallbackHost !== config.server.primaryHost
         ? [{
             id: 'fallback',
             host: config.server.fallbackHost,
@@ -72,7 +72,7 @@ class FailoverManager {
 
     logger.warn(`DNS check failed for ${candidate.label} (${candidate.host}): ${check.error}`);
 
-    // If candidate failed and we have a fallback, switch immediately
+    // If candidate failed and dynamic failover is enabled with multiple endpoints, switch
     if (this.endpoints.length > 1) {
       this.currentIndex = (this.currentIndex + 1) % this.endpoints.length;
       candidate = this.getCurrentEndpoint();
@@ -112,7 +112,7 @@ class FailoverManager {
     const currentFails = this.getCurrentEndpoint().consecutiveFails;
 
     // Exponential curve with 15% random jitter
-    const exp = Math.min(base * Math.pow(1.25, Math.min(currentFails, 6)), max);
+    const exp = Math.min(base * Math.pow(1.2, Math.min(currentFails, 5)), max);
     const jitter = exp * (0.85 + Math.random() * 0.3);
     return Math.round(jitter);
   }

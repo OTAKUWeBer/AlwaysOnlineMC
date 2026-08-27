@@ -149,6 +149,7 @@ class ChatEngine {
     const usernameLower = player.username.toLowerCase();
     const isWeber = usernameLower.includes('weber') || usernameLower.includes('otakuweber');
 
+    // Wait 7.5s after join so the bot has already moved/stepped in world (bypasses server anti-bot chat filters)
     setTimeout(() => {
       if (this.canSendChat()) {
         if (isWeber) {
@@ -163,7 +164,7 @@ class ChatEngine {
           this.send(template.replace('{player}', player.username));
         }
       }
-    }, 2500);
+    }, 7500);
   }
 
   handlePlayerLeave(player) {

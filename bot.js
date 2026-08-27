@@ -91,7 +91,7 @@ async function startBot() {
     viewDistance: config.bot.viewDistance,
     checkTimeoutInterval: config.network.checkTimeoutInterval,
     keepAlive: true,
-    hideErrors: false,
+    hideErrors: true,
   };
 
   let bot;

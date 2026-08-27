@@ -17,6 +17,7 @@ class Humanizer {
     this.jitterInterval = null;
     this.curiosityInterval = null;
     this.spawnPosition = null;
+    this.pendingTimeouts = new Set();
   }
 
   start() {
@@ -26,20 +27,26 @@ class Humanizer {
     }
 
     // Initial movement burst to unlock server anti-bot chat filters
-    setTimeout(() => {
+    const initTimer1 = setTimeout(() => {
+      this.pendingTimeouts.delete(initTimer1);
       if (this.active && this.bot && this.bot.entity) {
         this.bot.setControlState('forward', true);
-        setTimeout(() => {
+        const initTimer2 = setTimeout(() => {
+          this.pendingTimeouts.delete(initTimer2);
           if (this.active && this.bot) {
             this.bot.setControlState('forward', false);
             this.bot.setControlState('sneak', true);
-            setTimeout(() => {
+            const initTimer3 = setTimeout(() => {
+              this.pendingTimeouts.delete(initTimer3);
               if (this.active && this.bot) this.bot.setControlState('sneak', false);
             }, 300);
+            this.pendingTimeouts.add(initTimer3);
           }
         }, 600);
+        this.pendingTimeouts.add(initTimer2);
       }
     }, 1000);
+    this.pendingTimeouts.add(initTimer1);
 
     this.scheduleNextAction();
     this.startMicroJitter();
@@ -56,6 +63,10 @@ class Humanizer {
     this.antiAfkTimeout = null;
     this.jitterInterval = null;
     this.curiosityInterval = null;
+    for (const t of this.pendingTimeouts) {
+      clearTimeout(t);
+    }
+    this.pendingTimeouts.clear();
   }
 
   /**
@@ -128,15 +139,19 @@ class Humanizer {
         this.bot.lookAt(eyePos, true).catch(() => {});
 
         if (nearestPlayer.position.distanceTo(this.bot.entity.position) < 3.5 && Math.random() > 0.4) {
-          setTimeout(() => {
+          const waveTimer1 = setTimeout(() => {
+            this.pendingTimeouts.delete(waveTimer1);
             if (this.active && this.bot && this.bot.entity) {
               this.bot.swingArm('right');
               this.bot.setControlState('sneak', true);
-              setTimeout(() => {
+              const waveTimer2 = setTimeout(() => {
+                this.pendingTimeouts.delete(waveTimer2);
                 if (this.active && this.bot) this.bot.setControlState('sneak', false);
               }, 350);
+              this.pendingTimeouts.add(waveTimer2);
             }
           }, 400);
+          this.pendingTimeouts.add(waveTimer1);
         }
       }
     }, 5000 + Math.random() * 3000);

@@ -95,6 +95,7 @@ class ChatEngine {
     this.bot = bot;
     this.lastChatTime = 0;
     this.idleChatInterval = null;
+    this.pendingTimeouts = new Set();
   }
 
   start() {
@@ -111,6 +112,10 @@ class ChatEngine {
       clearInterval(this.idleChatInterval);
       this.idleChatInterval = null;
     }
+    for (const t of this.pendingTimeouts) {
+      clearTimeout(t);
+    }
+    this.pendingTimeouts.clear();
   }
 
   canSendChat() {
@@ -150,7 +155,8 @@ class ChatEngine {
     const isWeber = usernameLower.includes('weber') || usernameLower.includes('otakuweber');
 
     // Wait 7.5s after join so the bot has already moved/stepped in world (bypasses server anti-bot chat filters)
-    setTimeout(() => {
+    const joinTimer = setTimeout(() => {
+      this.pendingTimeouts.delete(joinTimer);
       if (this.canSendChat()) {
         if (isWeber) {
           const weberMsg = WEBER_GREETINGS[Math.floor(Math.random() * WEBER_GREETINGS.length)];
@@ -165,6 +171,7 @@ class ChatEngine {
         }
       }
     }, 7500);
+    this.pendingTimeouts.add(joinTimer);
   }
 
   handlePlayerLeave(player) {
@@ -189,10 +196,12 @@ class ChatEngine {
       lower.includes('kire');
 
     if (isMentioned && config.chat.enableMentionReplies && this.canSendChat()) {
-      setTimeout(() => {
+      const replyTimer = setTimeout(() => {
+        this.pendingTimeouts.delete(replyTimer);
         const reply = MENTION_RESPONSES[Math.floor(Math.random() * MENTION_RESPONSES.length)];
         this.send(`@${username} ${reply}`);
       }, 1200 + Math.random() * 1000);
+      this.pendingTimeouts.add(replyTimer);
     }
   }
 }

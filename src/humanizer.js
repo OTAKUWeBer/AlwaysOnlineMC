@@ -183,18 +183,25 @@ class Humanizer {
           await this.bot.equip(itemToPlace, 'hand').catch(() => {});
         }
 
-        // Scan all 6 faces for valid placement surface
+        // Scan adjacent locations for valid placement surfaces (avoiding bot's own hitbox [0,0,0] & [0,1,0])
         const candidates = [];
         const directions = [
-          { ref: [0, -1, 0], face: [0, 1, 0], air: [0, 0, 0] },
+          // Floor placements around the bot
           { ref: [1, -1, 0], face: [0, 1, 0], air: [1, 0, 0] },
           { ref: [-1, -1, 0], face: [0, 1, 0], air: [-1, 0, 0] },
           { ref: [0, -1, 1], face: [0, 1, 0], air: [0, 0, 1] },
           { ref: [0, -1, -1], face: [0, 1, 0], air: [0, 0, -1] },
-          { ref: [1, 0, 0], face: [-1, 0, 0], air: [0, 0, 0] },
-          { ref: [-1, 0, 0], face: [1, 0, 0], air: [0, 0, 0] },
-          { ref: [0, 0, 1], face: [0, 0, -1], air: [0, 0, 0] },
-          { ref: [0, 0, -1], face: [0, 0, 1], air: [0, 0, 0] },
+          { ref: [1, -1, 1], face: [0, 1, 0], air: [1, 0, 1] },
+          { ref: [-1, -1, 1], face: [0, 1, 0], air: [-1, 0, 1] },
+          { ref: [1, -1, -1], face: [0, 1, 0], air: [1, 0, -1] },
+          { ref: [-1, -1, -1], face: [0, 1, 0], air: [-1, 0, -1] },
+          // Wall placements around the bot
+          { ref: [2, 0, 0], face: [-1, 0, 0], air: [1, 0, 0] },
+          { ref: [-2, 0, 0], face: [1, 0, 0], air: [-1, 0, 0] },
+          { ref: [0, 0, 2], face: [0, 0, -1], air: [0, 0, 1] },
+          { ref: [0, 0, -2], face: [0, 0, 1], air: [0, 0, -1] },
+          // Ceiling placement
+          { ref: [0, 3, 0], face: [0, -1, 0], air: [0, 2, 0] },
         ];
 
         for (const d of directions) {
@@ -208,7 +215,8 @@ class Humanizer {
 
         if (candidates.length > 0) {
           const target = candidates[Math.floor(Math.random() * candidates.length)];
-          await this.bot.lookAt(target.refBlock.position.offset(0.5, 0.5, 0.5), true).catch(() => {});
+          const targetCenter = target.refBlock.position.offset(0.5, 0.5, 0.5);
+          await this.bot.lookAt(targetCenter, true).catch(() => {});
           logger.action(`Placing ${itemToPlace.name} on ${target.refBlock.name}...`);
           try {
             await this.bot.placeBlock(target.refBlock, target.face);
@@ -216,6 +224,7 @@ class Humanizer {
             return;
           } catch (e) {
             this.bot.swingArm('right');
+            logger.warn(`Place block notice: ${e.message}`);
           }
         }
       }

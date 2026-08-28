@@ -16,14 +16,6 @@
     <a href="https://app.koyeb.com/deploy?type=git&repository=OTAKUWeBer%2FAlwaysOnlineMC&branch=main&name=alwaysonlinemc">
       <img src="https://www.koyeb.com/static/images/deploy/button.svg" alt="Deploy to Koyeb" height="32" />
     </a>
-    &nbsp;
-    <a href="https://railway.app/template/new?referralCode=AlwaysOnlineMC">
-      <img src="https://railway.app/button.svg" alt="Deploy on Railway" height="32" />
-    </a>
-    &nbsp;
-    <a href="https://render.com/deploy?repo=https://github.com/OTAKUWeBer/AlwaysOnlineMC">
-      <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32" />
-    </a>
   </p>
 
   <p align="center">
@@ -73,10 +65,9 @@ Platforms using European game server IP ranges (Hetzner / OVH) are **never rate-
 
 ---
 
-### 🚀 2. Koyeb / Railway (Cloud PaaS)
+### 🚀 2. Koyeb (1-Click Cloud Container)
 
 * **Koyeb** ([koyeb.com](https://www.koyeb.com/)): Select the **Frankfurt (EU)** region for 100% free container hosting that bypasses US datacenter firewall blocks.
-* **Railway** ([railway.app](https://railway.app/)): Deploy directly from GitHub using our included `railway.json`.
 
 ---
 

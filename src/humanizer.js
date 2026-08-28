@@ -266,6 +266,14 @@ class Humanizer {
       return;
     }
 
+    // Cycle hotbar slot periodically to emit explicit active client packets (bypasses server AFK timers)
+    if (Math.random() > 0.4) {
+      try {
+        const randomSlot = Math.floor(Math.random() * 9);
+        this.bot.setQuickBarSlot(randomSlot);
+      } catch (e) {}
+    }
+
     const hasItem = !!this.bot.heldItem || (this.bot.inventory?.items()?.length || 0) > 0;
 
     let routines;
@@ -276,7 +284,8 @@ class Humanizer {
         'interact_block',
         'interact_block',
         'safe_wander_return',
-        'jump_and_step'
+        'jump_and_step',
+        'crouch_wave'
       ];
     } else {
       routines = [

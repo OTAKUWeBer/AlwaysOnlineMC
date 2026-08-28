@@ -17,6 +17,8 @@ let activeBot = null;
 let humanizer = null;
 let chatEngine = null;
 let reconnectTimer = null;
+let watchdogTimer = null;
+let lastServerPacketTime = 0;
 let isShuttingDown = false;
 
 // ---------------------------------------------------------
@@ -39,6 +41,10 @@ logger.info(`• Anti-AFK Frequency: ${config.behavior.antiAfkMin / 1000}s - ${c
 // Bot Lifecycle Management
 // ---------------------------------------------------------
 function cleanup() {
+  if (watchdogTimer) {
+    clearInterval(watchdogTimer);
+    watchdogTimer = null;
+  }
   if (humanizer) {
     humanizer.stop();
     humanizer = null;
@@ -106,6 +112,31 @@ async function startBot() {
 
   bot.isReady = false;
   bot.isRespawning = false;
+  lastServerPacketTime = Date.now();
+
+  const updatePacketTimestamp = () => {
+    lastServerPacketTime = Date.now();
+  };
+
+  bot.on('time', updatePacketTimestamp);
+  bot.on('entityMoved', updatePacketTimestamp);
+  bot.on('health', updatePacketTimestamp);
+  bot.on('spawnReset', updatePacketTimestamp);
+
+  if (bot._client) {
+    bot._client.on('packet', updatePacketTimestamp);
+    bot._client.on('raw', updatePacketTimestamp);
+  }
+
+  // Active Dead Socket / Ghost Connection Watchdog (checks every 5 seconds)
+  watchdogTimer = setInterval(() => {
+    if (!activeBot || !activeBot.isReady) return;
+    const silentDuration = Date.now() - lastServerPacketTime;
+    if (silentDuration > 25000) {
+      logger.warn(`Ghost socket detected (server silent for ${(silentDuration / 1000).toFixed(0)}s). Forcing clean reconnect...`);
+      scheduleReconnect('Server unannounced shutdown / Ghost socket');
+    }
+  }, 5000);
 
   // Instantiate Subsystems
   humanizer = new Humanizer(bot);
@@ -115,12 +146,14 @@ async function startBot() {
   // Core Events
   // -------------------------------------------------------
   bot.on('login', () => {
+    lastServerPacketTime = Date.now();
     logger.success(`Logged in successfully to ${endpoint.host}:${endpoint.port}!`);
     failover.recordSuccess();
     bot.isRespawning = false;
   });
 
   bot.on('spawn', () => {
+    lastServerPacketTime = Date.now();
     bot.isReady = true;
     bot.isRespawning = false;
 

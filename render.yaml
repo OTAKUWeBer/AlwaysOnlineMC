@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: alwaysonlinemc
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node bot.js
+    envVars:
+      - key: SERVER_HOST
+        sync: false
+      - key: SERVER_PORT
+        sync: false
+      - key: BOT_USERNAME
+        value: YumeVanguard
+      - key: AUTH_MODE
+        value: offline
+      - key: MC_VERSION
+        value: 1.21.4
+      - key: ENABLE_CHAT
+        value: "true"
+      - key: ENABLE_BANGLA_SLANG
+        value: "true"
+      - key: ENABLE_BLOCK_PLACING
+        value: "true"
+      - key: TIMEZONE
+        value: Asia/Dhaka
+      - key: PORT
+        value: "10000"

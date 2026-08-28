@@ -12,6 +12,7 @@ const logger = require('./src/logger');
 const Humanizer = require('./src/humanizer');
 const ChatEngine = require('./src/chatEngine');
 const failover = require('./src/failover');
+const { startWebServer, stopWebServer } = require('./src/webServer');
 
 let activeBot = null;
 let humanizer = null;
@@ -333,6 +334,7 @@ function handleShutdown(signal) {
   }
 
   cleanup();
+  stopWebServer();
   logger.success('AlwaysBotMC safely disconnected. Goodbye! ⚔️');
   process.exit(0);
 }
@@ -340,5 +342,11 @@ function handleShutdown(signal) {
 process.on('SIGINT', () => handleShutdown('SIGINT'));
 process.on('SIGTERM', () => handleShutdown('SIGTERM'));
 
-// Launch
+// Start optional Web Health server (Render / Railway / Koyeb / Docker)
+startWebServer(() => ({
+  isReady: !!(activeBot && activeBot.isReady),
+  isConnecting: !activeBot || !activeBot.isReady
+}));
+
+// Launch Bot
 startBot();

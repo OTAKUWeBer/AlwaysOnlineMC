@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  alwaysonlinemc:
+    build: .
+    container_name: alwaysonlinemc-bot
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-10000}:${PORT:-10000}"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

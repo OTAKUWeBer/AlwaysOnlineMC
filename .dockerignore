@@ -1,0 +1,13 @@
+node_modules/
+.npm/
+.pnpm-store/
+.git/
+.env
+.env.local
+.env.*.local
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

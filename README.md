@@ -8,28 +8,28 @@
 
   [![Minecraft](https://img.shields.io/badge/Minecraft-1.8%20--%201.21.x%20(Java)-22c55e?style=flat-square&logo=minecraft&logoColor=white)](https://minecraft.net/)
   [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-  [![Aternos Failover](https://img.shields.io/badge/Aternos-Route%20Failover-0284c7?style=flat-square)](https://aternos.org/)
+  [![Aternos Failover](https://img.shields.io/badge/Aternos-24%2F7%20Guard-0284c7?style=flat-square)](https://aternos.org/)
   [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
   [![License](https://img.shields.io/badge/License-MIT-a855f7?style=flat-square)](LICENSE)
 
   <p align="center">
-    <a href="https://render.com/deploy?repo=https://github.com/OTAKUWeBer/AlwaysOnlineMC">
-      <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32" />
+    <a href="https://app.koyeb.com/deploy?type=git&repository=OTAKUWeBer%2FAlwaysOnlineMC&branch=main&name=alwaysonlinemc">
+      <img src="https://www.koyeb.com/static/images/deploy/button.svg" alt="Deploy to Koyeb" height="32" />
     </a>
     &nbsp;
     <a href="https://railway.app/template/new?referralCode=AlwaysOnlineMC">
       <img src="https://railway.app/button.svg" alt="Deploy on Railway" height="32" />
     </a>
     &nbsp;
-    <a href="https://app.koyeb.com/deploy?type=git&repository=OTAKUWeBer%2FAlwaysOnlineMC&branch=main&name=alwaysonlinemc">
-      <img src="https://www.koyeb.com/static/images/deploy/button.svg" alt="Deploy to Koyeb" height="32" />
+    <a href="https://render.com/deploy?repo=https://github.com/OTAKUWeBer/AlwaysOnlineMC">
+      <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32" />
     </a>
   </p>
 
   <p align="center">
     <a href="#quick-start">⚡ Quick Start</a> •
     <a href="#how-it-works">💡 How It Works</a> •
-    <a href="#cloud-deployment">☁️ 1-Click Cloud Deploy</a> •
+    <a href="#cloud-deployment">☁️ 24/7 Hosting Guide</a> •
     <a href="#docker">🐳 Docker</a> •
     <a href="#features">✨ Features</a> •
     <a href="#configuration">⚙️ Config</a> •
@@ -53,37 +53,34 @@ Free hosting providers like **Aternos** automatically shut down server instances
 
 ---
 
-## <a id="cloud-deployment"></a>☁️ 24/7 Cloud Deployment (100% Free)
+## <a id="cloud-deployment"></a>☁️ 24/7 Cloud Hosting Guide
 
-You don't need to keep your PC powered on. Deploy AlwaysOnlineMC to any free cloud platform with 1 click:
+You don't need to keep your PC powered on. Here are the best platforms to run AlwaysOnlineMC 24/7:
 
-### 1. Render.com (Recommended — 1-Click Free Hosting)
+### 🏆 1. Dedicated Free Bot Panels (Recommended — 100% Free & Never Blocked)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/OTAKUWeBer/AlwaysOnlineMC)
+Platforms using European game server IP ranges (Hetzner / OVH) are **never rate-limited by Aternos**:
 
-1. Click the **Deploy to Render** button above (or create a **Web Service** on [Render.com](https://render.com/)).
-2. Connect your GitHub repository.
-3. Under **Environment Variables**, configure:
-   - `SERVER_HOST`: `your-server.aternos.me`
-   - `SERVER_PORT`: `25565` (or your server port)
-   - `BOT_USERNAME`: `YumeVanguard`
-   - `PORT`: `10000` (Enables the built-in HTTP health endpoint)
-4. Click **Create Service**.
-5. **Keep Awake 24/7 (Free Tier)**:
-   - Copy your Render app URL (e.g. `https://your-bot.onrender.com/health`).
-   - Create a free account on [UptimeRobot](https://uptimerobot.com/) or [cron-job.org](https://cron-job.org/).
-   - Add a monitor that pings your `/health` URL every 5 minutes to prevent Render free tier from sleeping!
+* **Wispbyte** ([free.wispbyte.com](https://free.wispbyte.com/)): 100% Free Pterodactyl hosting.
+* **Bot-Hosting.net** ([bot-hosting.net](https://bot-hosting.net/)): Free 24/7 Node.js bot hosting.
+* **FalixNodes** ([falixnodes.net](https://falixnodes.net/)): Free game bot hosting.
+
+**Setup Instructions:**
+1. Upload this repository (or clone via Git).
+2. In **File Manager**, configure `.env` with your `SERVER_HOST` and `SERVER_PORT`.
+3. Set the startup file to `bot.js`.
+4. Click **Start** in the console.
 
 ---
 
-### 2. Railway.app / Koyeb (1-Click)
+### 🚀 2. Koyeb / Railway (Cloud PaaS)
 
-- **Railway**: Click the **Deploy on Railway** button, set your `SERVER_HOST` and `SERVER_PORT`, and deploy.
-- **Koyeb**: Click **Deploy to Koyeb**, select `Node.js`, and set environment variables.
+* **Koyeb** ([koyeb.com](https://www.koyeb.com/)): Select the **Frankfurt (EU)** region for 100% free container hosting that bypasses US datacenter firewall blocks.
+* **Railway** ([railway.app](https://railway.app/)): Deploy directly from GitHub using our included `railway.json`.
 
 ---
 
-### 3. Oracle Cloud Always-Free VM (Most Powerful Forever)
+### 🖥️ 3. Oracle Cloud Always-Free VM (Dedicated Linux Server)
 
 Oracle Cloud provides **4 free ARM cores and 24 GB RAM forever**:
 
@@ -109,22 +106,7 @@ pm2 save
 
 ---
 
-### 4. Pterodactyl Panels (Wispbyte / FreeMCServer / Bot-Hosting)
-
-1. Upload repository files to your Pterodactyl panel.
-2. In **File Manager**, create or edit `.env` with your `SERVER_HOST` and `SERVER_PORT`.
-3. Set startup command / file to `bot.js`.
-4. Click **Start** in the Console tab.
-
----
-
-### ❓ Note on Vercel
-> [!NOTE]
-> **Why Vercel is not supported**: Vercel is a **serverless** platform with a strict 10–60 second maximum execution timeout per HTTP request. Minecraft bots require a permanent, long-running TCP socket connection. Use **Render**, **Railway**, **Koyeb**, **Docker**, or **VPS** instead.
-
----
-
-## <a id="docker"></a>🐳 Docker & Docker Compose
+### 🐳 4. Docker & Docker Compose (Self-Hosting)
 
 Run AlwaysOnlineMC in a lightweight, hardened container with a single command:
 
@@ -141,6 +123,12 @@ docker compose up -d
 # 3. View live bot logs
 docker compose logs -f
 ```
+
+---
+
+### ❓ Architecture Note: Why Vercel & Netlify Cannot Host Minecraft Bots
+> [!NOTE]
+> **Serverless vs Persistent Sockets**: Vercel and Netlify are **serverless** platforms designed for short-lived HTTP requests (10–60 second maximum execution timeout). They cannot maintain continuous, long-running TCP sockets required for Minecraft. Always use persistent process hosts (**Wispbyte, Koyeb, Railway, Docker, or VPS**).
 
 ---
 
@@ -264,7 +252,7 @@ node bot.js
 | `ENABLE_BANGLA_SLANG` | `true` | Enables regional gaming phrases in chat pool |
 | `ENABLE_BLOCK_PLACING` | `true` | Enables active block placement routines |
 | `TIMEZONE` | `Asia/Dhaka` | Timezone identifier for log timestamps |
-| `PORT` | `10000` | Optional HTTP health check port (for Render/Railway) |
+| `PORT` | `10000` | Optional HTTP health check port (for Render/Koyeb) |
 
 ---
 
@@ -291,8 +279,8 @@ For survival servers, run the following administrative commands to ensure the bo
 ## <a id="troubleshooting"></a>🛠️ Troubleshooting
 
 ### Connection Reset (`ECONNRESET`)
-* **Cause**: Server is actively restarting or booting on Aternos.
-* **Resolution**: No manual intervention required. The failover loop will automatically rotate endpoints and connect when the socket is ready.
+* **Cause**: Server is actively restarting, or cloud datacenter IP (like AWS US) is filtered by Aternos DDoS proxy.
+* **Resolution**: Deploy on European game bot hosting (Wispbyte, Bot-Hosting.net, or Koyeb Frankfurt).
 
 ### Authentication Failure (`Invalid session`)
 * **Cause**: Server enforces online mode authentication (`online-mode=true`).
